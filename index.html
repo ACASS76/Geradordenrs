@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Números Aleatórios</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: #333;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #gerar-btn {
+            background-color: black;
+            color: white;
+        }
+        #copiar-btn {
+            background-color: black;
+            color: white;
+        }
+        #numeros {
+            width: 80%;
+            height: 200px;
+            background-color: red;
+            color: white;
+            padding: 10px;
+            margin: 10px 0;
+            overflow-y: auto;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+    <script>
+        function gerarNumeros() {
+            const prefixos = ['84', '85', '87', '86', '82', '258'];
+            const quantidade = 100;
+            let numeros = [];
+
+            for (let i = 0; i < quantidade; i++) {
+                const prefixo = '+258' + prefixos[Math.floor(Math.random() * prefixos.length)];
+                let sufixo = '';
+                for (let j = 0; j < 7; j++) {
+                    sufixo += Math.floor(Math.random() * 10);
+                }
+                numeros.push(prefixo + sufixo);
+            }
+
+            return numeros;
+        }
+
+        function copiarParaClipboard(texto) {
+            navigator.clipboard.writeText(texto).then(function() {
+                alert('Números copiados para o clipboard!');
+            }, function(err) {
+                alert('Erro ao copiar para o clipboard: ', err);
+            });
+        }
+
+        function gerarECopiar() {
+            const numeros = gerarNumeros();
+            const numerosComVirgulas = numeros.join(', ');
+            document.getElementById('numeros').innerText = numerosComVirgulas;
+        }
+
+        function copiarNumeros() {
+            const texto = document.getElementById('numeros').innerText;
+            copiarParaClipboard(texto);
+        }
+    </script>
+</head>
+<body>
+    <h1>Gerador de Números Aleatórios</h1>
+    <button id="gerar-btn" onclick="gerarECopiar()">Gerar</button>
+    <div id="numeros"></div>
+    <button id="copiar-btn" onclick="copiarNumeros()">Copiar</button>
+</body>
+</html>
